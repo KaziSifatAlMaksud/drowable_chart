@@ -71,7 +71,7 @@ if ($result && $result->rowCount() > 0) {
             "input_1": {
               "connections": [
                 {
-                  "node": "5",
+                  "node": "po_5",
                   "input": "output_1"
                 }
               ]
@@ -84,8 +84,8 @@ if ($result && $result->rowCount() > 0) {
 
 
 
-        "5": {
-          "id": 5,
+        "po_5": {
+          "id": "po_5",
           "name": "template",
           "data": {
             "template": "Write your template"
@@ -97,7 +97,7 @@ if ($result && $result->rowCount() > 0) {
             "input_1": {
               "connections": [
                 {
-                  "node": "6",
+                  "node": "re_6",
                   "input": "output_1"
                 }
               ]
@@ -111,7 +111,7 @@ if ($result && $result->rowCount() > 0) {
                   "output": "input_1"
                 },
                 {
-                  "node": "11",
+                  "node": "ch_11",
                   "output": "input_1"
                 }
               ]
@@ -123,8 +123,8 @@ if ($result && $result->rowCount() > 0) {
 
 
 
-        "6": {
-          "id": 6,
+        "re_6": {
+          "id": "re_6",
           "name": "github",
           "data": {
             "name": "https://github.com/jerosoler/Drawflow"
@@ -137,7 +137,7 @@ if ($result && $result->rowCount() > 0) {
             "output_1": {
               "connections": [
                 {
-                  "node": "5",
+                  "node": "po_5",
                   "output": "input_1"
                 }
               ]
@@ -149,8 +149,8 @@ if ($result && $result->rowCount() > 0) {
 
 
 
-        "11": {
-          "id": 11,
+        "ch_11": {
+          "id": "ch_11",
           "name": "log",
           "data": {},
           "class": "log",
@@ -160,11 +160,7 @@ if ($result && $result->rowCount() > 0) {
             "input_1": {
               "connections": [
                 {
-                  "node": "5",
-                  "input": "output_1"
-                },
-                {
-                  "node": "7",
+                  "node": "po_5",
                   "input": "output_1"
                 }
               ]

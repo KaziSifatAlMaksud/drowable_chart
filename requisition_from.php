@@ -2,12 +2,12 @@
 include 'connect.php';
 
 try {
-    if(isset($_POST['name'], $_POST['tittle'], $_POST['body'], $_POST['pos_x'], $_POST['pos_y']) 
+    if(isset($_POST['name'], $_POST['tittle'], $_POST['body'], $_POST['pos_x'], $_POST['pos_y'], $_POST['output_node']) 
        && !empty($_POST['name']) && !empty($_POST['tittle']) && !empty($_POST['body']) 
-       && !empty($_POST['pos_x']) && !empty($_POST['pos_y'])) {
+       && !empty($_POST['pos_x']) && !empty($_POST['pos_y']) && !empty($_POST['output_node'])) {
 
           // Prepare statement
-    $stmt = $conn->prepare("INSERT INTO requisition (name, tittle, body, pos_x, pos_y) VALUES (:name, :tittle, :body, :pos_x, :pos_y)");
+    $stmt = $conn->prepare("INSERT INTO requisition (name, tittle, body, pos_x, pos_y,output_node) VALUES (:name, :tittle, :body, :pos_x, :pos_y, :output_node)");
 
     // Bind parameters
     $stmt->bindParam(':name', $_POST['name']);
@@ -15,6 +15,7 @@ try {
     $stmt->bindParam(':body', $_POST['body']);
     $stmt->bindParam(':pos_x', $_POST['pos_x']);
     $stmt->bindParam(':pos_y', $_POST['pos_y']);
+    $stmt->bindParam(':output_node', $_POST['output_node']);
 
     // Execute statement
     $stmt->execute();
@@ -71,6 +72,10 @@ $conn = null;
     <div class="form-group">
       <label for="pos_y">Position Y:</label>
       <input type="text" class="form-control" id="pos_y" placeholder="height" name="pos_y">
+    </div>
+    <div class="form-group">
+      <label for="output_node">Output Node:</label>
+      <input type="text" class="form-control" id="output_node" placeholder="height" name="output_node">
     </div>
   
   <button type="submit" class="btn btn-primary">Submit</button>
