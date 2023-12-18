@@ -60,6 +60,8 @@ if ($result && $result->rowCount() > 0) {
   "drawflow": {
     "Home": {
       "data": {
+
+
         "PO_4": {
           "id": 'PO_4',
           "name": "email",
@@ -82,53 +84,100 @@ if ($result && $result->rowCount() > 0) {
           "pos_y": 439
         },
 
-        "po_1": {
-                    "id": "po_1",
-                    "name": "po",
-                    "data": [],
-                    "class": "po",
-                    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"><\/i> parchece Oder 1<\/div>\r\n                    <div class=\"box\">asdfasfasdffdgfdgdfgsgsfdgsgsdfgsdfgsdfg<\/div>\r\n                <\/div>",
-                    "typenode": false,
-                    "inputs": {
-                        "input_1": {
-                            "connections": [{
-                                "node": "req2",
-                                "input": "output_1"
-                            }]
-                        }
-                    },
-                    "outputs": {
-                        "output_1": {
-                            "connections": [{
-                                "node": "ch_1",
-                                "output": "intput_1"
-                            }]
-                        }
-                    },
-                    "pos_x": "500",
-                    "pos_y": "500"
-                },
-        
+  "req2": {
+    "id": "req2",
+    "name": "requisition",
+    "data": [],
+    "class": "requisition",
+    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> Requgition_1</div>\r\n                    <div class=\"box\">this is our test</div>\r\n                </div>",
+    "typenode": false,
+    "inputs": [],
+    "outputs": {
+      "output_1": {
+        "connections": [
+          {
+            "node": "po_1",
+            "input": "intput_1"
+          }
+        ]
+      }
+    },
+    "pos_x": "200",
+    "pos_y": "100"
+  },
+  "req7": {
+    "id": "req7",
+    "name": "requisition",
+    "data": [],
+    "class": "requisition",
+    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> Requgition_2</div>\r\n                    <div class=\"box\">this is our testfgh</div>\r\n                </div>",
+    "typenode": false,
+    "inputs": [],
+    "outputs": {
+      "output_1": {
+        "connections": [
+          {
+            "node": "",
+            "input": "intput_1"
+          }
+        ]
+      }
+    },
+    "pos_x": "220",
+    "pos_y": "100"
+  },
+  "po_1": {
+    "id": "po_1",
+    "name": "po",
+    "data": [],
+    "class": "po",
+    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> parchece Oder 1</div>\r\n                    <div class=\"box\">asdfasfasdffdgfdgdfgsgsfdgsgsdfgsdfgsdfg</div>\r\n                </div>",
+    "typenode": false,
+    "inputs": {
+      "input_1": {
+        "connections": [
+          {
+            "node": "req2",
+            "input": "output_1"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "output_1": {
+        "connections": [
+          {
+            "node": "ch_1",
+            "output": "intput_1"
+          }
+        ]
+      }
+    },
+    "pos_x": "500",
+    "pos_y": "500"
+  },
+  "ch_1": {
+    "id": "ch_1",
+    "name": "chalan",
+    "data": [],
+    "class": "chalan",
+    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> chalan_1</div>\r\n                    <div class=\"box\">this is our testfghfadsfsdfasdfa fgvas</div>\r\n                </div>",
+    "typenode": false,
+    "inputs": {
+      "input_1": {
+        "connections": [
+          {
+            "node": "po_1",
+            "input": "output_1"
+          }
+        ]
+      }
+    },
+    "outputs": [],
+    "pos_x": "600",
+    "pos_y": "100"
+  },
 
-        "req2": {
-                    "id": "req2",
-                    "name": "requisition",
-                    "data": [],
-                    "class": "requisition",
-                    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"><\/i> Requgition_1<\/div>\r\n                    <div class=\"box\">this is our test<\/div>\r\n                <\/div>",
-                    "typenode": false,
-                    "inputs": [],
-                    "outputs": {
-                        "output_1": {
-                            "connections": [{
-                                "node": "po_1",
-                                "input": "intput_1"
-                            }]
-                        }
-                    },
-                    "pos_x": "200",
-                    "pos_y": "100"
-                },
 
         "po_5": {
           "id": "po_5",
