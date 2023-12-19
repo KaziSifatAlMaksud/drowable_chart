@@ -1,23 +1,163 @@
 
 <?php
-include 'connect.php'; 
+include 'connect.php';
 
 $sql = "SELECT * FROM requisition";
+$sql1 = "SELECT * FROM po";
+$sql2 = "SELECT * FROM chalan";
+
 $result = $conn->query($sql);
+$result1 = $conn->query($sql1);
+$result2 = $conn->query($sql2);
+$mergedData = array();
 
-if ($result && $result->rowCount() > 0) {
+$dataToImport = array();
+$datatopo = array();
+$datatochalan = array();
+
+
+
+if ($result2 && $result2->rowCount() > 0) {
     // Output data of each row
-    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
-
+    $rows = $result2->fetchAll(PDO::FETCH_ASSOC);
     for ($i = 0; $i < count($rows); $i++) {
-      echo "id: " . $rows[$i]["id"] . " - Name: " . $rows[$i]["name"] . " - Title: " . $rows[$i]["tittle"] . " - Body: " . $rows[$i]["body"] . " - Pos X: " . $rows[$i]["pos_x"] . " - Pos Y: " . $rows[$i]["pos_y"] . "<br>";
-  }
+        // Create an associative array for each row
+        $datatochalan["ch_{$rows[$i]['id']}"] = array(
+            "id" => "ch_{$rows[$i]['id']}",
+            "name" => "chalan",
+            "data" => array(),
+            "class" => "chalan",
+            "html" => "
+                <div>
+                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> {$rows[$i]['tittle']}</div>
+                    <div class=\"box\">{$rows[$i]['body']}</div>
+                </div>",
+            "typenode" => false,
+            "inputs" => array(
+                "input_1" => array(  
+                    "connections" => array(
+                      array(
+                          "node" => "{$rows[$i]['po_id']}",
+                          "input"=> "output_1"     
+                      )             
+                  ),                
+                )
+            ),
+            "outputs" => array(),  
+            "pos_x" => $rows[$i]["pos_x"],
+            "pos_y" => $rows[$i]["pos_y"]
+        );
+    }
   
 } else {
     echo "0 results";
 }
 
-// $conn->close();
+
+//result 1:
+
+if ($result1 && $result1->rowCount() > 0) {
+    // Output data of each row
+    $rows = $result1->fetchAll(PDO::FETCH_ASSOC);
+
+   
+
+
+    for ($i = 0; $i < count($rows); $i++) {
+        // Create an associative array for each row
+        $datatopo["po_{$rows[$i]['id']}"] = array(
+            "id" => "po_{$rows[$i]['id']}",
+            "name" => "po",
+            "data" => array(),
+            "class" => "po",
+            "html" => "
+                <div>
+                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> {$rows[$i]['tittle']}</div>
+                    <div class=\"box\">{$rows[$i]['body']}</div>
+                </div>",
+            "typenode" => false,
+            "inputs" => array(
+                "input_1" => array(  
+                    "connections" => array(
+                      array(
+                          "node" => "{$rows[$i]['requisition_id']}",
+                          "input"=> "output_1"     
+                      )             
+                  ),
+                
+                )
+
+            ),
+               
+            "outputs" => array(
+              "output_1" => array(  
+                "connections" => array(
+                  array(
+                      "node" => "{$rows[$i]['calan_id']}",
+                      "output"=> "intput_1"     
+                  )             
+              ),
+            
+            )
+        ),
+            "pos_x" => $rows[$i]["pos_x"],
+            "pos_y" => $rows[$i]["pos_y"]
+        );
+    }
+
+} else {
+    echo "0 results";
+}
+
+
+//$result 
+if ($result && $result->rowCount() > 0) {
+    // Output data of each row
+    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+
+   
+
+    for ($i = 0; $i < count($rows); $i++) {
+        // Create an associative array for each row
+        $dataToImport["req{$rows[$i]['id']}"] = array(
+            "id" => "req{$rows[$i]['id']}",
+            "name" => "requisition",
+            "data" => array(),
+            "class" => "requisition",
+            "html" => "
+                <div>
+                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> {$rows[$i]['tittle']}</div>
+                    <div class=\"box\">{$rows[$i]['body']}</div>
+                </div>",
+            "typenode" => false,
+            "inputs" => array(),
+               
+            "outputs" => array(
+              "output_1" => array(  
+                "connections" => array(
+                  array(
+                      "node" => "{$rows[$i]['output']}",
+                      "input"=> "intput_1"     
+                  )             
+              ),
+            
+            )
+        ),
+            "pos_x" => $rows[$i]["pos_x"],
+            "pos_y" => $rows[$i]["pos_y"]
+        );
+    }
+
+} else {
+    echo "0 results";
+}
+
+
+$mergedData = array_merge($dataToImport, $datatopo, $datatochalan);
+
+$jsonData = json_encode($mergedData);
+echo "<script>let mergedData = $jsonData; console.log(mergedData);</script>";
+
 
 ?>
 
@@ -52,223 +192,17 @@ if ($result && $result->rowCount() > 0) {
     var id = document.getElementById("drawflow");
     const editor = new Drawflow(id);
     editor.reroute = true;
- 
 
-    
-    const dataToImport = 
-    {
+    const dataToImport = {
   "drawflow": {
     "Home": {
-      "data": {
-
-
-        "PO_4": {
-          "id": 'PO_4',
-          "name": "email",
-          "data": {},
-          "class": "email",
-          "html": "\n            <div>\n              <div class=\"title-box\"><i class=\"fas fa-at\"></i> Send Email </div>\n            </div>\n            ",
-          "typenode": false,
-          "inputs": {
-            "input_1": {
-              "connections": [
-                {
-                  "node": "po_5",
-                  "input": "output_1"
-                }
-              ]
-            }
-          },
-          "outputs": {},
-          "pos_x": 1033,
-          "pos_y": 439
-        },
-
-  "req2": {
-    "id": "req2",
-    "name": "requisition",
-    "data": [],
-    "class": "requisition",
-    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> Requgition_1</div>\r\n                    <div class=\"box\">this is our test</div>\r\n                </div>",
-    "typenode": false,
-    "inputs": [],
-    "outputs": {
-      "output_1": {
-        "connections": [
-          {
-            "node": "po_1",
-            "input": "intput_1"
-          }
-        ]
-      }
-    },
-    "pos_x": "200",
-    "pos_y": "100"
-  },
-  "req7": {
-    "id": "req7",
-    "name": "requisition",
-    "data": [],
-    "class": "requisition",
-    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> Requgition_2</div>\r\n                    <div class=\"box\">this is our testfgh</div>\r\n                </div>",
-    "typenode": false,
-    "inputs": [],
-    "outputs": {
-      "output_1": {
-        "connections": [
-          {
-            "node": "",
-            "input": "intput_1"
-          }
-        ]
-      }
-    },
-    "pos_x": "220",
-    "pos_y": "100"
-  },
-  "po_1": {
-    "id": "po_1",
-    "name": "po",
-    "data": [],
-    "class": "po",
-    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> parchece Oder 1</div>\r\n                    <div class=\"box\">asdfasfasdffdgfdgdfgsgsfdgsgsdfgsdfgsdfg</div>\r\n                </div>",
-    "typenode": false,
-    "inputs": {
-      "input_1": {
-        "connections": [
-          {
-            "node": "req2",
-            "input": "output_1"
-          }
-        ]
-      }
-    },
-    "outputs": {
-      "output_1": {
-        "connections": [
-          {
-            "node": "ch_1",
-            "output": "intput_1"
-          }
-        ]
-      }
-    },
-    "pos_x": "500",
-    "pos_y": "500"
-  },
-  "ch_1": {
-    "id": "ch_1",
-    "name": "chalan",
-    "data": [],
-    "class": "chalan",
-    "html": "\r\n                <div>\r\n                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> chalan_1</div>\r\n                    <div class=\"box\">this is our testfghfadsfsdfasdfa fgvas</div>\r\n                </div>",
-    "typenode": false,
-    "inputs": {
-      "input_1": {
-        "connections": [
-          {
-            "node": "po_1",
-            "input": "output_1"
-          }
-        ]
-      }
-    },
-    "outputs": [],
-    "pos_x": "600",
-    "pos_y": "100"
-  },
-
-
-        "po_5": {
-          "id": "po_5",
-          "name": "template",
-          "data": {
-            "template": "Write your template"
-          },
-          "class": "template",
-          "html": "\n            <div>\n              <div class=\"title-box\"><i class=\"fas fa-code\"></i> Template</div>\n              <div class=\"box\">\n                Ger Vars\n                <textarea df-template></textarea>\n                Output template with vars\n              </div>\n            </div>\n            ",
-          "typenode": false,
-          "inputs": {
-            "input_1": {
-              "connections": [
-                {
-                  "node": "re_6",
-                  "input": "output_1"
-                }
-              ]
-            }
-          },
-          "outputs": {
-            "output_1": {
-              "connections": [
-                {
-                  "node": "PO_4",
-                  "output": "input_1"
-                },
-                {
-                  "node": "ch_11",
-                  "output": "input_1"
-                }
-              ]
-            }
-          },
-          "pos_x": 607,
-          "pos_y": 304
-        },
-
-
-
-        "re_6": {
-          "id": "re_6",
-          "name": "github",
-          "data": {
-            "name": "https://github.com/jerosoler/Drawflow"
-          },
-          "class": "github",
-          "html": "\n          <div>\n            <div class=\"title-box\"><i class=\"fab fa-github \"></i> Github Stars</div>\n            <div class=\"box\">\n              <p>Enter repository url</p>\n            <input type=\"text\" df-name>\n            </div>\n          </div>\n          ",
-          "typenode": false,
-          "inputs": {},
-          "outputs": {
-            "output_1": {
-              "connections": [
-                {
-                  "node": "po_5",
-                  "output": "input_1"
-                }
-              ]
-            }
-          },
-          "pos_x": 341,
-          "pos_y": 191
-        },
-
-
-
-        "ch_11": {
-          "id": "ch_11",
-          "name": "log",
-          "data": {},
-          "class": "log",
-          "html": "\n            <div>\n              <div class=\"title-box\"><i class=\"fas fa-file-signature\"></i> Save log file </div>\n            </div>\n            ",
-          "typenode": false,
-          "inputs": {
-            "input_1": {
-              "connections": [
-                {
-                  "node": "po_5",
-                  "input": "output_1"
-                }
-              ]
-            }
-          },
-          "outputs": {},
-          "pos_x": 1031,
-          "pos_y": 363
-        }
-      }
+      "data": mergedData
     }
   }
-}
+};
+
+
+    
 
     editor.start();
     editor.import(dataToImport);
