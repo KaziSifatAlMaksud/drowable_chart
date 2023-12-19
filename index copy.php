@@ -10,18 +10,6 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- 
 Handle multiple input connections
         $inputConnections = explode(",", $rows[$i]['input']);

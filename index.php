@@ -136,7 +136,7 @@ if ($result && $result->rowCount() > 0) {
               "output_1" => array(  
                 "connections" => array(
                   array(
-                      "node" => "{$rows[$i]['output']}",
+                      "node" => "{$rows[$i]['output_node']}",
                       "input"=> "intput_1"     
                   )             
               ),

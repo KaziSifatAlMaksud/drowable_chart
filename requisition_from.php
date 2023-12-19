@@ -6,7 +6,11 @@ try {
        && !empty($_POST['name']) && !empty($_POST['tittle']) && !empty($_POST['body']) 
        && !empty($_POST['pos_x']) && !empty($_POST['pos_y']) && !empty($_POST['output_node'])) {
 
-          // Prepare statement
+      // Convert $_POST['output_node'] to an array if it's not one
+        $outputNode = is_array($_POST['output_node']) ? $_POST['output_node'] : explode(',', $_POST['output_node']);
+        $outputNodeJson = json_encode($outputNode);
+
+    // Prepare statement
     $stmt = $conn->prepare("INSERT INTO requisition (name, tittle, body, pos_x, pos_y,output_node) VALUES (:name, :tittle, :body, :pos_x, :pos_y, :output_node)");
 
     // Bind parameters
@@ -15,7 +19,7 @@ try {
     $stmt->bindParam(':body', $_POST['body']);
     $stmt->bindParam(':pos_x', $_POST['pos_x']);
     $stmt->bindParam(':pos_y', $_POST['pos_y']);
-    $stmt->bindParam(':output_node', $_POST['output_node']);
+    $stmt->bindParam(':output_node', $outputNodeJson); 
 
     // Execute statement
     $stmt->execute();
@@ -73,11 +77,19 @@ $conn = null;
       <label for="pos_y">Position Y:</label>
       <input type="text" class="form-control" id="pos_y" placeholder="height" name="pos_y">
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="output_node">Output Node:</label>
       <input type="text" class="form-control" id="output_node" placeholder="height" name="output_node">
     </div>
-  
+   -->
+   <div class="form-group">
+    <label for="output_node">Output Nodes:</label>
+    <input type="text" class="form-control" name="output_node[]" placeholder="Node 1">
+    <input type="text" class="form-control" name="output_node[]" placeholder="Node 2">
+    <input type="text" class="form-control" name="output_node[]" placeholder="Node 3">
+    <!-- Add more inputs as needed -->
+</div>
+
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
