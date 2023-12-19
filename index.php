@@ -112,42 +112,46 @@ if ($result1 && $result1->rowCount() > 0) {
 
 //$result 
 if ($result && $result->rowCount() > 0) {
-    // Output data of each row
-    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+    // Initialize an empty array for the output
+    $dataToImport = [];
 
-   
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $outputs = [];
 
-    for ($i = 0; $i < count($rows); $i++) {
-        // Create an associative array for each row
-        $dataToImport["req{$rows[$i]['id']}"] = array(
-            "id" => "req{$rows[$i]['id']}",
+        $original_array = json_decode($row['output_node']);
+        
+        if ($original_array) {
+            $connections = [];
+            foreach ($original_array as $item) {
+                $connections[] = [
+                    "node" => $item,
+                    "output" => "input_1"
+                ];
+            }
+            
+            $outputs["output_1"] = [
+                "connections" => $connections
+            ];
+        }
+        
+
+        $dataToImport["req{$row['id']}"] = [
+            "id" => "req{$row['id']}",
             "name" => "requisition",
-            "data" => array(),
+            "data" => [],
             "class" => "requisition",
             "html" => "
                 <div>
-                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> {$rows[$i]['tittle']}</div>
-                    <div class=\"box\">{$rows[$i]['body']}</div>
+                    <div class=\"title-box\"><i class=\"fas fa-at\"></i> {$row['tittle']}</div>
+                    <div class=\"box\">{$row['body']}</div>
                 </div>",
             "typenode" => false,
-            "inputs" => array(),
-               
-            "outputs" => array(
-              "output_1" => array(  
-                "connections" => array(
-                  array(
-                      "node" => "{$rows[$i]['output_node']}",
-                      "input"=> "intput_1"     
-                  )             
-              ),
-            
-            )
-        ),
-            "pos_x" => $rows[$i]["pos_x"],
-            "pos_y" => $rows[$i]["pos_y"]
-        );
+            "inputs" => [],
+            "outputs" => $outputs,
+            "pos_x" => $row["pos_x"],
+            "pos_y" => $row["pos_y"]
+        ];
     }
-
 } else {
     echo "0 results";
 }
