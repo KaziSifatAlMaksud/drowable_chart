@@ -173,17 +173,18 @@ echo "<script>let mergedData = $jsonData; console.log(mergedData);</script>";
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Drawflow | Simple Flow program libray</title>
   <meta name="description" content="Simple library for flow programming. Drawflow allows you to create data flows easily and quickly.">
+
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.48/dist/drawflow.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="beautiful.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="access/beautiful.css" />
+  <script src="access/drawflow.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="access/drawflow.css"> </link> 
+  <link rel="stylesheet" href="access/swap.css"></link>
+  <script src="access/handlebars.min.js"></script>
+  <script src="access/sweetelert2@9.js"></script>
+  <script src="access/micromodal.min.js"></script> 
+
 
   <div class="wrapper">
     <div class="col-right">
