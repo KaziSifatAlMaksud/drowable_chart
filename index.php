@@ -177,21 +177,22 @@ echo "<script>let mergedData = $jsonData; console.log(mergedData);</script>";
 </head>
 <body>
 
+ <script src="access/drawflow.min.js"></script> 
+ <link rel="stylesheet" type="text/css" href="access/drawflow.css" />
   <link rel="stylesheet" type="text/css" href="access/beautiful.css" />
-  <script src="access/drawflow.min.js"></script>
-   <link rel="stylesheet" type="text/css" href="access/drawflow.css"> </link> 
-  <link rel="stylesheet" href="access/swap.css"></link>
-  <script src="access/handlebars.min.js"></script>
-  <script src="access/sweetelert2@9.js"></script>
-  <script src="access/micromodal.min.js"></script> 
 
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" /> -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+  <!-- <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script> -->
 
   <div class="wrapper">
     <div class="col-right">
-     
       <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
     </div>
   </div>
+
 
   <script>
     var id = document.getElementById("drawflow");
