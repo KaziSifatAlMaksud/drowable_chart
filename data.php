@@ -19,55 +19,81 @@ try {
 }
 
 
+
+
+
 $recognitionIdToFilter = '101';
-$poConnectionArrayInput = [];
+
+// Initialize arrays to store connections for each PO
+$poConnections = [];
 $tempConnections1 = [];
 
-if (!empty($dataset)) { 
+// Assuming $dataset is defined somewhere before this code
+if (!empty($dataset)) {
     foreach ($dataset as $item) {
         if (isset($item["req"], $item["po"], $item["cha"]) && $item["req"] === $recognitionIdToFilter) {
-            if (!in_array($item["po"], $tempConnections1)) {
-                $tempConnections1[] = $item["po"];
-               
+            $po = $item["po"];
+            $cha = $item["cha"];
+
+            // Initialize the array for this PO if it doesn't exist
+            if (!array_key_exists($po, $poConnections)) {
+                $poConnections[$po] = [];
+                $tempConnections1[] = $po;
             }
-            $poConnectionArrayInput[] = array(
-                "node" => $item["cha"],
+
+            // Add the connection to the specific PO
+            $poConnections[$po][] = array(
+                "node" => $cha,
                 "input" => "output_1",
             );
         }
-    } 
+    }
 }
 
-$connections1 = [];
+// Function to create output connections
+function connection1($tempConnections1) {
+    $connections1 = [];
+    foreach ($tempConnections1 as $po) {
+        $connections1[] = array(
+            "node" => $po,
+            "output" => "input_1"
+        );
+    }
+    return $connections1;
+}
+
+$outputs1 = [];
 foreach ($tempConnections1 as $po) {
-    $connections1[] = array(
-        "node" => $po,
-        "output" => "input_1"
+    $outputs1[] = array(
+        "id" => $po,
+        "name" => "PO",
+        "data" => "",
+        "class" => "requisition",
+        "html" => "",
+        "typenode" => false,
+        "input" => array(
+            "inputs" => array(
+                "input_1" => array(
+                    "connections" => $poConnections[$po]
+                )
+            )
+        ),
+        "output_1" => array(
+            "connections" => connection1($tempConnections1)
+        ),
+        "pos_x" => 100,
+        "pos_y" => 200
     );
 }
 
-$finalStructure = array(
-    "inputs" => array(
-        "input_1" => array(
-            "connections" => $poConnectionArrayInput
-        )
-    )
-);
+// Convert to JSON and output
+$jsonOutput = json_encode($outputs1, JSON_PRETTY_PRINT);
+echo $jsonOutput;
 
-$outputs1 = array(
-    "id" => $recognitionIdToFilter,
-    "name" => "requisition",
-    "data" => "",
-    "class" => "requisition",
-    "html" => "",
-    "typenode" => false,
-    "input" => $finalStructure,
-    "output_1" => array(
-        "connections" => $connections1
-    ),
-    "pos_x" => 100,
-    "pos_y" => 200
-);
+
+
+
+
 
 
 
@@ -75,20 +101,17 @@ $outputs1 = array(
 
 //Po o order
 
-
-
-
-
 $tempConnections = array();
 $data = []; 
+$recognitionIdToFilter = '101'; 
 
 
 if (!empty($dataset)) { 
     foreach ($dataset as $item) {
-        if (isset($item["req"], $item["po"]) && $item["req"] === $recognitionIdToFilter) {
+      
             $tempConnections[$item["po"]] = true; 
         }
-    }
+    
 }
 
 
@@ -163,21 +186,14 @@ if (!empty($dataset)) {
             }
         }
     }
-echo '<pre>';
-echo json_encode($outputs3, JSON_PRETTY_PRINT);
-echo '</pre>';
+// echo '<pre>';
+// echo json_encode($outputs3, JSON_PRETTY_PRINT);
+// echo '</pre>';
 
 }
 
-
-
-
-
-
-
-
-
-$jsonData = json_encode($outputs);
+// $jsonData = json_encode($outputs);
+// $jsonData = json_encode($outputs1);
 ?>
 
 <!DOCTYPE html>
